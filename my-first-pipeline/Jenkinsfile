@@ -11,10 +11,10 @@ pipeline{
       }
       stage('back end'){
         agent{
-          docker {image 'python:latest'}
+          docker {image 'mysql:oracle'}
         }
       steps{
-          sh 'python --version'
+          sh 'mysql --version'
         }
       }
   }
