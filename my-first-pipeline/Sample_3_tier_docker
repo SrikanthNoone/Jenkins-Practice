@@ -1,0 +1,21 @@
+pipeline{
+ agent none
+    stages {
+      stage('front end'){
+        agent{
+          docker { image 'python:latest' }
+          }
+        steps { 
+          sh 'python --version'
+        }
+      }
+      stage('back end'){
+        agent{
+          docker {image 'mongo:latest'}
+        }
+      steps{
+          sh 'mongo --version'
+        }
+      }
+  }
+}
