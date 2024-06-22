@@ -14,7 +14,7 @@ pipeline{
           docker {image 'python:latest'}
         }
       steps{
-          sh 'mongo --version'
+          sh 'python --version'
         }
       }
   }
