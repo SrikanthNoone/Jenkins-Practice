@@ -11,7 +11,7 @@ pipeline{
       }
       stage('back end'){
         agent{
-          docker {image 'mongo:8.0.0-rc9-jammy'}
+          docker {image 'python:latest'}
         }
       steps{
           sh 'mongo --version'
