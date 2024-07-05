@@ -36,15 +36,13 @@ pipeline {
 
 stage('Build and Push Docker Image') {
     steps {
-        sh 'sudo chown jenkins:jenkins /var/run/docker.sock'
+        sh 'docker -H unix:///var/run/docker.sock build --privileged -t abhishekf5/ultimate-cicd:${BUILD_NUMBER} -f java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile java-maven-sonar-argocd-helm-k8s/spring-boot-app/'
         withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-            sh 'docker -H unix:///var/run/docker.sock build -t abhishekf5/ultimate-cicd:${BUILD_NUMBER} -f java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile java-maven-sonar-argocd-helm-k8s/spring-boot-app/'
             sh 'docker -H unix:///var/run/docker.sock login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
             sh 'docker -H unix:///var/run/docker.sock push abhishekf5/ultimate-cicd:${BUILD_NUMBER}'
         }
     }
 }
-
 
 
 
