@@ -31,17 +31,21 @@ pipeline {
         }
       }
     }
-   
+
+
 
 stage('Build and Push Docker Image') {
-    withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-        withEnv(["DOCKER_IMAGE=abhishekf5/ultimate-cicd:${BUILD_NUMBER}"]) {
-            sh 'docker -H unix:///var/run/docker.sock build -t $DOCKER_IMAGE .'
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+            sh 'docker -H unix:///var/run/docker.sock build -t abhishekf5/ultimate-cicd:${BUILD_NUMBER} .'
             sh 'docker -H unix:///var/run/docker.sock login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-            sh 'docker -H unix:///var/run/docker.sock push $DOCKER_IMAGE'
+            sh 'docker -H unix:///var/run/docker.sock push abhishekf5/ultimate-cicd:${BUILD_NUMBER}'
         }
     }
 }
+
+
+
 
 
 
